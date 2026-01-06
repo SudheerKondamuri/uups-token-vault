@@ -4,6 +4,8 @@ artifacts/
 cache/
 coverage/
 typechain-types/
+.deps/
+.states/
 
 # IDE
 .vscode/
