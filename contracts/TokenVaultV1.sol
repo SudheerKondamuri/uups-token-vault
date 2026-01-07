@@ -30,7 +30,7 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
         _grantRole(UPGRADER_ROLE, _admin);
     }
 
-    function deposit(uint256 amount) external {
+    function deposit(uint256 amount) external virtual {
         uint256 fee = (amount * depositFee) / 10000;
         uint256 netAmount = amount - fee;
 
@@ -40,7 +40,7 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
         _totalDeposits += netAmount;
     }
 
-    function withdraw(uint256 amount) external {
+    function withdraw(uint256 amount) external virtual {
         require(_balances[msg.sender] >= amount, "Insufficient balance");
 
         _balances[msg.sender] -= amount;
