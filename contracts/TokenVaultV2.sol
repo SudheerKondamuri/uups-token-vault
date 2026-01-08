@@ -14,7 +14,9 @@ contract TokenVaultV2 is TokenVaultV1 {
         yieldRate = _yieldRate;
     }
 
-    function setYieldRate(uint256 _yieldRate) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setYieldRate(
+        uint256 _yieldRate
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         yieldRate = _yieldRate;
     }
 
@@ -67,5 +69,15 @@ contract TokenVaultV2 is TokenVaultV1 {
     function withdraw(uint256 amount) public override {
         _updateYield(msg.sender);
         super.withdraw(amount);
+    }
+
+    function getImplementationVersion()
+        external
+        pure
+        virtual
+        override
+        returns (string memory)
+    {
+        return "V2";
     }
 }

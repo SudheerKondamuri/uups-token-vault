@@ -18,7 +18,9 @@ contract TokenVaultV3 is TokenVaultV2 {
         withdrawalDelay = _delay;
     }
 
-    function setWithdrawalDelay(uint256 _delaySeconds) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setWithdrawalDelay(
+        uint256 _delaySeconds
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         withdrawalDelay = _delaySeconds;
     }
 
@@ -26,7 +28,9 @@ contract TokenVaultV3 is TokenVaultV2 {
         return withdrawalDelay;
     }
 
-    function getWithdrawalRequest(address user) external view returns (uint256 amount, uint256 requestTime) {
+    function getWithdrawalRequest(
+        address user
+    ) external view returns (uint256 amount, uint256 requestTime) {
         WithdrawalRequest storage request = withdrawalRequests[user];
         return (request.amount, request.requestTime);
     }
@@ -34,9 +38,9 @@ contract TokenVaultV3 is TokenVaultV2 {
     function requestWithdrawal(uint256 amount) external {
         require(amount > 0, "Amount must be > 0");
         require(_balances[msg.sender] >= amount, "Insufficient balance");
-        
+
         _updateYield(msg.sender);
-        
+
         withdrawalRequests[msg.sender] = WithdrawalRequest({
             amount: amount,
             requestTime: block.timestamp
@@ -46,7 +50,10 @@ contract TokenVaultV3 is TokenVaultV2 {
     function executeWithdrawal() external returns (uint256) {
         WithdrawalRequest storage request = withdrawalRequests[msg.sender];
         require(request.amount > 0, "No request found");
-        require(block.timestamp >= request.requestTime + withdrawalDelay, "Delay not met");
+        require(
+            block.timestamp >= request.requestTime + withdrawalDelay,
+            "Delay not met"
+        );
 
         uint256 amount = request.amount;
         delete withdrawalRequests[msg.sender];
@@ -68,5 +75,14 @@ contract TokenVaultV3 is TokenVaultV2 {
     function withdraw(uint256) public pure override {
         revert("Use requestWithdrawal and executeWithdrawal");
     }
-    
+
+    function getImplementationVersion()
+        external
+        pure
+        virtual
+        override
+        returns (string memory)
+    {
+        return "V3";
+    }
 }
