@@ -72,7 +72,7 @@ contract TokenVaultV3 is TokenVaultV2 {
         return amount;
     }
 
-    function withdraw(uint256) public pure override {
+    function withdraw(uint256) public pure virtual override {
         revert("Use requestWithdrawal and executeWithdrawal");
     }
 

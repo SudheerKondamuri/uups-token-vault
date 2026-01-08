@@ -11,8 +11,8 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
 
     address public assetToken;
     uint256 public depositFee; 
-    uint256 private _totalDeposits;
-    mapping(address => uint256) private _balances;
+    uint256 public _totalDeposits;
+    mapping(address => uint256) public _balances;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -30,7 +30,7 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
         _grantRole(UPGRADER_ROLE, _admin);
     }
 
-    function deposit(uint256 amount) external virtual {
+    function deposit(uint256 amount) public virtual {
         uint256 fee = (amount * depositFee) / 10000;
         uint256 netAmount = amount - fee;
 
@@ -40,7 +40,7 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
         _totalDeposits += netAmount;
     }
 
-    function withdraw(uint256 amount) external virtual {
+    function withdraw(uint256 amount) public virtual {
         require(_balances[msg.sender] >= amount, "Insufficient balance");
 
         _balances[msg.sender] -= amount;

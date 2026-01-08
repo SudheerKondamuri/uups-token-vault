@@ -60,13 +60,13 @@ contract TokenVaultV2 is TokenVaultV1 {
         return _balances[msg.sender] - beforeBalance;
     }
 
-    function deposit(uint256 amount) public override {
+    function deposit(uint256 amount) public virtual override {
         require(!isPaused, "Vault is paused");
         _updateYield(msg.sender);
         super.deposit(amount);
     }
 
-    function withdraw(uint256 amount) public override {
+    function withdraw(uint256 amount) public virtual override {
         _updateYield(msg.sender);
         super.withdraw(amount);
     }
