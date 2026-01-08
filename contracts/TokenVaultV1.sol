@@ -61,7 +61,7 @@ contract TokenVaultV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeabl
         return depositFee;
     }
 
-    function getImplementationVersion() external pure returns (string memory) {
+    function getImplementationVersion() external pure virtual returns (string memory) {
         return "V1";
     }
 
