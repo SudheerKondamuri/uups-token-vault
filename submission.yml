@@ -1,0 +1,14 @@
+task: "Build Production-Grade Upgradeable Smart Contract System"
+student: "Kondamuri Satya Sudheer"
+repository: "https://github.com/SudheerKondamuri/uups-token-vault"
+framework: "Hardhat"
+features:
+  - UUPS Proxy Pattern
+  - Role Based Access Control
+  - State Migration V1 -> V2 -> V3
+  - Storage Gap Management
+versions:
+  v1: "Basic Vault with Fees"
+  v2: "Yield Accrual & Pausing"
+  v3: "Timelocked Withdrawals"
+test_status: "24/24 Passing"
